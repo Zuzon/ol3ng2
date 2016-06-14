@@ -13,6 +13,7 @@ coverage
 !karma-test-shim.js
 *.map
 *.d.ts
+!openlayers.d.ts
 !make.js
 !bundles/*.js
 typings
