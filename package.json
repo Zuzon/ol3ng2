@@ -1,0 +1,67 @@
+{
+    "name": "ol3ng2",
+    "version": "0.0.0",
+    "description": "Angular2 directive set for OpenLayers3",
+    "author": "Aigars Zeiza <zuzon@drummer.com>",
+    "license": "GNUv3",
+    "scripts": {
+        "test": "tsc && karma start",
+        "test-watch": "tsc && karma start --no-single-run --auto-watch",
+        "commit": "npm run prepublish && npm test && git-cz",
+        "prepublish": "typings install && tsc && node make.js",
+        "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Zuzon/ol3ng2.git"
+    },
+    "keywords": [
+        "angular2",
+        "openlayers"
+    ],
+    "bugs": {
+        "url": "https://github.com/Zuzon/ol3ng2/issues"
+    },
+    "main": "ol3ng2.js",
+    "typings": "./ol3ng2.d.ts",
+    "homepage": "https://github.com/Zuzon/ol3ng2",
+    "peerDependencies": {
+        "@angular/common": "2.0.0-rc.1",
+        "@angular/compiler": "2.0.0-rc.1",
+        "@angular/core": "2.0.0-rc.1",
+        "@angular/http": "2.0.0-rc.1",
+        "openlayers": "3.16.0"
+    },
+    "devDependencies": {
+        "@angular/common": "2.0.0-rc.1",
+        "@angular/compiler": "2.0.0-rc.1",
+        "@angular/core": "2.0.0-rc.1",
+        "@angular/http": "2.0.0-rc.1",
+        "@angular/platform-browser": "2.0.0-rc.1",
+        "commitizen": "~2.5.0",
+        "cz-conventional-changelog": "~1.1.4",
+        "es6-promise": "^3.0.2",
+        "es6-shim": "^0.35.0",
+        "gulp": "^3.9.1",
+        "gulp-git": "^1.7.1",
+        "jasmine-core": "~2.4.1",
+        "karma": "~0.13.15",
+        "karma-chrome-launcher": "~0.2.2",
+        "karma-firefox-launcher": "~0.1.7",
+        "karma-jasmine": "~0.3.8",
+        "karma-typescript-preprocessor": "0.0.21",
+        "reflect-metadata": "0.1.2",
+        "rxjs": "5.0.0-beta.6",
+        "semantic-release": "~4.3.5",
+        "systemjs": "~0.19.24",
+        "systemjs-builder": "^0.15.13",
+        "tsd": "^0.6.5",
+        "typescript": "^1.8.9",
+        "typings": "^0.6.8",
+        "zone.js": "^0.6.10",
+        "openlayers": "3.16.0"
+    },
+    "czConfig": {
+        "path": "node_modules/cz-conventional-changelog"
+    }
+}
