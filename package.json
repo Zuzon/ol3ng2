@@ -5,9 +5,7 @@
     "author": "Aigars Zeiza <zuzon@drummer.com>",
     "license": "GNUv3",
     "scripts": {
-        "test": "tsc && karma start",
-        "test-watch": "tsc && karma start --no-single-run --auto-watch",
-        "commit": "npm run prepublish && npm test && git-cz",
+        "commit": "npm run prepublish && git-cz",
         "prepublish": "typings install && tsc && node make.js",
         "semantic-release": "semantic-release pre && npm publish && semantic-release post"
     },
@@ -22,8 +20,8 @@
     "bugs": {
         "url": "https://github.com/Zuzon/ol3ng2/issues"
     },
-    "main": "ol3ng2.js",
-    "typings": "./ol3ng2.d.ts",
+    "main": "index.js",
+    "typings": "./index.d.ts",
     "homepage": "https://github.com/Zuzon/ol3ng2",
     "peerDependencies": {
         "@angular/common": "2.0.0-rc.1",
