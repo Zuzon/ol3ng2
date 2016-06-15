@@ -13,6 +13,6 @@
     "files": [
         "typings/main.d.ts",
         "openlayers.d.ts",
-        "ol3ng2.ts"
+        "index.ts"
     ]
 }
