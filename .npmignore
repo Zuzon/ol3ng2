@@ -12,6 +12,7 @@ coverage
 !*.d.ts
 tests
 typings
+demo
 typings.json
 
 #################
