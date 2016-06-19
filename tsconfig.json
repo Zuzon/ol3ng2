@@ -12,7 +12,11 @@
     },
     "files": [
         "typings/main.d.ts",
-        "openlayers.d.ts",
+        "./openlayers.d.ts",
         "index.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "demo"
     ]
 }
