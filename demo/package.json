@@ -36,6 +36,7 @@
     "systemjs": "0.19.26",
     "zone.js": "0.6.12",
     "ol3ng2": "file:../",
+    "highlightjs": "^8.7.0",
     "openlayers": "3.16.0"
   },
   "devDependencies": {
@@ -53,6 +54,7 @@
     "ts-node": "0.5.5",
     "tslint": "3.11.0",
     "typescript": "1.8.10",
-    "typings": "0.8.1"
+    "typings": "0.8.1",
+    "node-sass": "^3.7.0"
   }
 }

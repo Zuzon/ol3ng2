@@ -1,0 +1,8 @@
+@import "./highlight";
+
+:host {
+  @extend .highlight-block;
+  pre {
+    @extend .highlight-pre;
+  }
+}

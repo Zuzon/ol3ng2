@@ -15,6 +15,7 @@ coverage
 *.map
 *.d.ts
 !openlayers.d.ts
+!demo/src/typings.d.ts
 !make.js
 !bundles/*.js
 typings

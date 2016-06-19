@@ -5,7 +5,8 @@ module.exports = function(defaults) {
     sassCompiler: {
       includePaths: [
         'node_modules/ng2-material/',
-        'node_modules/'
+        'node_modules/',
+        'highlight/'
       ]
     },
     vendorNpmFiles: [
