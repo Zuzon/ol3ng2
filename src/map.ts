@@ -16,11 +16,14 @@ import { Layer } from './layer';
     styles: [':host{display:block;}'],
     directives: [Layer]
 })
-export class Map implements AfterViewInit {
+export class Map implements AfterViewInit, AfterContentInit {
+    @ContentChildren(Layer)
+    private _layers: QueryList<Layer>;
     public olInstance: ol.Map;
     constructor(private _el: ElementRef) {
     }
     ngAfterViewInit(): void {
+        console.log('after view init', this._layers.length);
         this.olInstance = new ol.Map({
             layers: [],
             target: this._el.nativeElement,
@@ -29,5 +32,11 @@ export class Map implements AfterViewInit {
                 zoom: 8
             })
         });
+        this._layers.forEach(item => {
+            this.olInstance.addLayer(item.olInstance);
+        });
+    }
+    ngAfterContentInit(): void {
+        console.log('after content init', this._layers);
     }
 }

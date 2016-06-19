@@ -33,8 +33,10 @@ export class Layer implements AfterContentInit {
     ngAfterContentInit(): void {
         this.olInstance = new this._type({
             source: new ol.source.OSM()
-        })
-        this._map.olInstance.addLayer(this.olInstance);
+        });
+        if(this._map.olInstance){
+            this._map.olInstance.addLayer(this.olInstance);
+        }
     }
     ngOnDestroy(): void {
         this._map.olInstance.removeLayer(this.olInstance);
