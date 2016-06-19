@@ -13,7 +13,7 @@ import {
 @Component({
     selector: 'map',
     template: ' ',
-    styles: [],
+    styles: [':host{display:block;}'],
     directives: []
 })
 export class Map implements AfterViewInit {

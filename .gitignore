@@ -9,6 +9,7 @@ node_modules/*
 npm-debug.log
 coverage
 *.js
+!angular-cli-build.js
 !karma.conf.js
 !karma-test-shim.js
 *.map

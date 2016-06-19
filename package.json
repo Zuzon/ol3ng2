@@ -20,7 +20,7 @@
     "bugs": {
         "url": "https://github.com/Zuzon/ol3ng2/issues"
     },
-    "main": "index.js",
+    "main": "./index.js",
     "typings": "./index.d.ts",
     "homepage": "https://github.com/Zuzon/ol3ng2",
     "peerDependencies": {
