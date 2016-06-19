@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { Ol3Ng2 } from 'ol3ng2';
 import {HighlightComponent, HighlightContainerComponent} from '../shared/highlight/index';
 @Component({
@@ -10,6 +10,8 @@ import {HighlightComponent, HighlightContainerComponent} from '../shared/highlig
 })
 export class AccessibleMapComponent implements OnInit {
   public template: string;
+  public layerType: Type = ol.layer.Tile;
+  public source: ol.source.Source = new ol.source.OSM();
   constructor() {
     this.template = '<a>some piece of code</a>';
   }

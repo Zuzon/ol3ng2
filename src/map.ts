@@ -8,13 +8,13 @@ import {
     AfterContentInit,
     ElementRef
 } from '@angular/core';
-
+import { Layer } from './layer';
 
 @Component({
     selector: 'map',
     template: ' ',
     styles: [':host{display:block;}'],
-    directives: []
+    directives: [Layer]
 })
 export class Map implements AfterViewInit {
     public olInstance: ol.Map;
@@ -22,20 +22,11 @@ export class Map implements AfterViewInit {
     }
     ngAfterViewInit(): void {
         this.olInstance = new ol.Map({
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            controls: ol.control.defaults({
-                attributionOptions: ({
-                    collapsible: false
-                })
-            }),
+            layers: [],
             target: this._el.nativeElement,
             view: new ol.View({
                 center: [0, 0],
-                zoom: 2
+                zoom: 8
             })
         });
     }
