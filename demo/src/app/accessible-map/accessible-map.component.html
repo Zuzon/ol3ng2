@@ -1,13 +1,22 @@
-<map>
+<p>Center {{center | json}}</p>
+<input type="number" [value]="center[0]" (input)="center = [$event.target.value, center[1]]" />
+<input type="number" [value]="center[1]" (input)="center = [center[0], $event.target.value]" />
+<input type="number" [value]="zoom" (input)="zoom = $event.target.value" />
+<map style="height: 600px">
     <layer [type]="layerType" [source]="source"></layer>
-    <!--<view [center]="[0, 0]", [zoom]="1"></view>-->
+    <view [(center)]="center" [(zoom)]="zoom"></view>
 </map>
 <div layout="column">
-  <docs-highlight-container class="examples-intro" selector="pre > code">
-    <pre>
-        <code class="highlight">
-          {{template}}
-        </code>
-    </pre>
-</docs-highlight-container>
+    <docs-highlight-container class="examples-intro" selector="pre > code">
+        <pre>
+            <code class="highlight">
+                {{template}}
+            </code>
+        </pre>
+        <pre>
+            <code class="highlight">
+                {{code}}
+            </code>
+        </pre>
+    </docs-highlight-container>
 </div>

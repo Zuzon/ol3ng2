@@ -20,7 +20,10 @@ import { Map } from './map';
     template: ' ',
     styles: [],
     directives: [],
-    inputs: ['type', 'source']
+    inputs: [
+        'type', 
+        'source'
+        ]
 })
 export class Layer implements AfterContentInit {
     private _type: any;

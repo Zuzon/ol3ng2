@@ -9,16 +9,19 @@ import {
     ElementRef
 } from '@angular/core';
 import { Layer } from './layer';
+import { View } from './view';
 
 @Component({
     selector: 'map',
     template: ' ',
     styles: [':host{display:block;}'],
-    directives: [Layer]
+    directives: [Layer, View]
 })
 export class Map implements AfterViewInit, AfterContentInit {
     @ContentChildren(Layer)
     private _layers: QueryList<Layer>;
+    @ContentChild(View)
+    private _view: View;
     public olInstance: ol.Map;
     constructor(private _el: ElementRef) {
     }
@@ -27,14 +30,12 @@ export class Map implements AfterViewInit, AfterContentInit {
         this.olInstance = new ol.Map({
             layers: [],
             target: this._el.nativeElement,
-            view: new ol.View({
-                center: [0, 0],
-                zoom: 8
-            })
+            view: this._view.olInstance
         });
         this._layers.forEach(item => {
             this.olInstance.addLayer(item.olInstance);
         });
+        
     }
     ngAfterContentInit(): void {
         console.log('after content init', this._layers);

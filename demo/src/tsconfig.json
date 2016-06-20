@@ -18,7 +18,6 @@
 
   "files": [
     "main.ts",
-    "typings.d.ts",
-    "../node_modules/ol3ng2/openlayers.d.ts"
+    "typings.d.ts"
   ]
 }
