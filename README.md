@@ -4,39 +4,28 @@ ol3 directives for angular 2 (under construction)
 
 
 ```ts
-import {HTTP_PROVIDERS} from '@angular/http';
-import {Component, Injectable, provide} from '@angular/core';
+...
 import {Ol3Ng2} from 'ol3ng2/ol3ng2';
-import {bootstrap} from '@angular/platform-browser-dynamic';
-
-bootstrap(AppComponent, [
-    HTTP_PROVIDERS
-]);
+...
 
 @Component({
-    selector: 'app',
-    template: `
-        <map>
-        </map>
-    `,
-    directives: [
-        Ol3Ng2
-    ]
-})
-export class AppComponent {
-
-    constructor() {
-    }
+      ...
+      directives: [Ol3Ng2]
+    })
+    export class AccessibleMapComponent implements OnInit {
+      public layerType = ol.layer.Tile;
+      public source: ol.source.Source = new ol.source.OSM();
+      public center: ol.Coordinate = [0, 0];
+      public zoom: number = 2;
+      ...
 }
 ```
 
 Build your map in template:
 ```html
 <map>
-    <layers>
-        <tile [source]="tileSource"></tile>
-    </layers>
-    <view [center]="[0, 0]", [zoom]="1"></view>
+    <layer [type]="layerType" [source]="source"></layer>
+    <view [(center)]="center" [(zoom)]="zoom"></view>
 </map>
 ```
 
