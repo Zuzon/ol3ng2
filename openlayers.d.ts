@@ -3669,6 +3669,12 @@ declare namespace ol {
             getVisible(): boolean;
 
             /**
+             * Return the Z-index of the layer, which is used to order layers before rendering. The default Z-index is 0.
+             * The Z-index of the layer
+             */
+            getZIndex(): number;
+
+            /**
              * Adjust the layer brightness. A value of -1 will render the layer completely black. A value of 0 will leave the brightness unchanged. A value of 1 will render the layer completely white. Other values are linear multipliers on the effect (values are clamped between -1 and 1).
              * @param brightness The brightness of the layer
              */
@@ -3721,6 +3727,12 @@ declare namespace ol {
              * @param visible The visibility of the layer.
              */
             setVisible(visible: boolean): void;
+
+            /**
+             * Set Z-index of the layer, which is used to order layers before rendering. The default Z-index is 0.
+             * @param Z-index of the layer.
+             */
+            setZIndex(zindex: number): void;
         }
 
         /**

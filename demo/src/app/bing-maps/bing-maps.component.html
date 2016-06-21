@@ -1,9 +1,9 @@
-<p>Center {{center | json}}</p>
-<input type="number" [value]="center[0]" (input)="center = [$event.target.value, center[1]]" />
-<input type="number" [value]="center[1]" (input)="center = [center[0], $event.target.value]" />
-<input type="number" [value]="zoom" (input)="zoom = $event.target.value" />
+<p>Bing maps</p>
+<input type="number" [value]="opacity" (input)="opacity = $event.target.value" step="0.01" value="0.9" min="0" max="1" />
+
 <map style="height: 600px">
     <tile [source]="source"></tile>
+    <tile [source]="source2" [opacity]="opacity"></tile>
     <view [(center)]="center" [(zoom)]="zoom"></view>
 </map>
 <div layout="column">
