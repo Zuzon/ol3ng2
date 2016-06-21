@@ -1,3 +1,104 @@
+System.registerDynamic("src/layers/tile", ["@angular/core", "../map", "./layer"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var __param = (this && this.__param) || function(paramIndex, decorator) {
+    return function(target, key) {
+      decorator(target, key, paramIndex);
+    };
+  };
+  var core_1 = $__require('@angular/core');
+  var map_1 = $__require('../map');
+  var layer_1 = $__require('./layer');
+  var Tile = (function(_super) {
+    __extends(Tile, _super);
+    function Tile(map) {
+      _super.call(this, map);
+      this.useInterimTilesOnErrorChange = new core_1.EventEmitter();
+    }
+    Object.defineProperty(Tile.prototype, "useInterimTilesOnError", {
+      get: function() {
+        return this._useInterimTilesOnError;
+      },
+      set: function(value) {
+        this._useInterimTilesOnError = value;
+        if (this.olInstance) {
+          this.olInstance.setUseInterimTilesOnError(value);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Tile.prototype.ngAfterContentInit = function() {
+      var _this = this;
+      this.olInstance = new ol.layer.Tile({
+        opacity: this.opacity,
+        source: this.source,
+        visible: this.visible,
+        extent: this.extent,
+        zIndex: this.zIndex,
+        minResolution: this.minResolution,
+        maxResolution: this.maxResolution
+      });
+      this.olInstance.on(['propertychange'], function(event) {
+        _this.onLayerPropertyChange(event);
+        if (event.key === 'useinterimtilesonerror') {
+          setTimeout(function() {
+            _this.useInterimTilesOnErrorChange.emit(_this.olInstance.getUseInterimTilesOnError());
+          }, 10);
+          return;
+        }
+      });
+      if (this._map.olInstance) {
+        this._map.olInstance.addLayer(this.olInstance);
+      }
+    };
+    Tile.prototype.ngOnDestroy = function() {
+      this._map.olInstance.removeLayer(this.olInstance);
+    };
+    Tile = __decorate([core_1.Component({
+      selector: 'map > tile',
+      template: ' ',
+      styles: [],
+      directives: [],
+      inputs: ['opacity', 'visible', 'extent', 'zIndex', 'minResolution', 'maxResolution', 'source', 'useInterimTilesOnError'],
+      outputs: ['opacity', 'visible', 'extent', 'zIndex', 'minResolution', 'maxResolution', 'source', 'useInterimTilesOnError']
+    }), __param(0, core_1.Host()), __param(0, core_1.Inject(core_1.forwardRef(function() {
+      return map_1.Map;
+    }))), __metadata('design:paramtypes', [map_1.Map])], Tile);
+    return Tile;
+  }(layer_1.Layer));
+  exports.Tile = Tile;
+  return module.exports;
+});
+
 System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__require, exports, module) {
   "use strict";
   ;
@@ -22,9 +123,7 @@ System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__r
       set: function(value) {
         this._opacity = value;
         if (this.olInstance) {
-          console.log('set opacity');
           this.olInstance.setOpacity(value);
-          this.olInstance.changed();
         }
       },
       enumerable: true,
@@ -38,7 +137,6 @@ System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__r
         this._visible = value;
         if (this.olInstance) {
           this.olInstance.setVisible(value);
-          this.olInstance.changed();
         }
       },
       enumerable: true,
@@ -52,7 +150,6 @@ System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__r
         this._extent = value;
         if (this.olInstance) {
           this.olInstance.setExtent(value);
-          this._map.olInstance.render();
         }
       },
       enumerable: true,
@@ -66,7 +163,6 @@ System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__r
         this._zIndex = value;
         if (this.olInstance) {
           this.olInstance.setZIndex(value);
-          this._map.olInstance.render();
         }
       },
       enumerable: true,
@@ -80,7 +176,6 @@ System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__r
         this._minResolution = value;
         if (this.olInstance) {
           this.olInstance.setMinResolution(value);
-          this._map.olInstance.render();
         }
       },
       enumerable: true,
@@ -94,7 +189,6 @@ System.registerDynamic("src/layers/base", ["@angular/core"], true, function($__r
         this._maxResolution = value;
         if (this.olInstance) {
           this.olInstance.setMaxResolution(value);
-          this._map.olInstance.render();
         }
       },
       enumerable: true,
@@ -176,7 +270,6 @@ System.registerDynamic("src/layers/layer", ["@angular/core", "./base"], true, fu
         this._source = value;
         if (this.olInstance) {
           this.olInstance.setSource(value);
-          this._map.olInstance.render();
         }
       },
       enumerable: true,
@@ -198,7 +291,7 @@ System.registerDynamic("src/layers/layer", ["@angular/core", "./base"], true, fu
   return module.exports;
 });
 
-System.registerDynamic("src/layers/tile", ["@angular/core", "../map", "./layer"], true, function($__require, exports, module) {
+System.registerDynamic("src/layers/vector", ["@angular/core", "../map", "./layer"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -237,21 +330,74 @@ System.registerDynamic("src/layers/tile", ["@angular/core", "../map", "./layer"]
   var core_1 = $__require('@angular/core');
   var map_1 = $__require('../map');
   var layer_1 = $__require('./layer');
-  var Tile = (function(_super) {
-    __extends(Tile, _super);
-    function Tile(map) {
+  var Vector = (function(_super) {
+    __extends(Vector, _super);
+    function Vector(map) {
       _super.call(this, map);
+      this.useInterimTilesOnErrorChange = new core_1.EventEmitter();
     }
-    Tile.prototype.ngAfterContentInit = function() {
+    Object.defineProperty(Vector.prototype, "renderBuffer", {
+      set: function(value) {
+        this._renderBuffer = value;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(Vector.prototype, "updateWhileInteracting", {
+      set: function(value) {
+        this._updateWhileInteracting = value;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(Vector.prototype, "updateWhileAnimating", {
+      set: function(value) {
+        this._updateWhileAnimating = value;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(Vector.prototype, "style", {
+      get: function() {
+        return this._style;
+      },
+      set: function(value) {
+        this._style = value;
+        if (this.olInstance) {
+          this.olInstance.setStyle(value);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(Vector.prototype, "map", {
+      get: function() {
+        return this._map;
+      },
+      set: function(value) {
+        this._map = value;
+        if (this.olInstance) {
+          this.olInstance.setMap(this._map.olInstance);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Vector.prototype.ngAfterContentInit = function() {
       var _this = this;
-      this.olInstance = new ol.layer.Tile({
+      this.olInstance = new ol.layer.Vector({
         opacity: this.opacity,
-        source: this.source,
+        source: (this.source),
         visible: this.visible,
         extent: this.extent,
         zIndex: this.zIndex,
         minResolution: this.minResolution,
-        maxResolution: this.maxResolution
+        maxResolution: this.maxResolution,
+        style: this._style,
+        map: this.map.olInstance,
+        renderBuffer: this._renderBuffer,
+        updateWhileAnimating: this._updateWhileAnimating,
+        updateWhileInteracting: this._updateWhileInteracting
       });
       this.olInstance.on(['propertychange'], function(event) {
         _this.onLayerPropertyChange(event);
@@ -260,26 +406,26 @@ System.registerDynamic("src/layers/tile", ["@angular/core", "../map", "./layer"]
         this._map.olInstance.addLayer(this.olInstance);
       }
     };
-    Tile.prototype.ngOnDestroy = function() {
+    Vector.prototype.ngOnDestroy = function() {
       this._map.olInstance.removeLayer(this.olInstance);
     };
-    Tile = __decorate([core_1.Component({
-      selector: 'map > tile',
+    Vector = __decorate([core_1.Component({
+      selector: 'vector',
       template: ' ',
       styles: [],
       directives: [],
-      inputs: ['opacity', 'visible', 'extent', 'zIndex', 'minResolution', 'maxResolution', 'source'],
+      inputs: ['opacity', 'visible', 'extent', 'zIndex', 'minResolution', 'maxResolution', 'source', 'map', 'renderBuffer', 'style', 'updateWhileAnimating', 'updateWhileInteracting'],
       outputs: ['opacity', 'visible', 'extent', 'zIndex', 'minResolution', 'maxResolution', 'source']
     }), __param(0, core_1.Host()), __param(0, core_1.Inject(core_1.forwardRef(function() {
       return map_1.Map;
-    }))), __metadata('design:paramtypes', [map_1.Map])], Tile);
-    return Tile;
+    }))), __metadata('design:paramtypes', [map_1.Map])], Vector);
+    return Vector;
   }(layer_1.Layer));
-  exports.Tile = Tile;
+  exports.Vector = Vector;
   return module.exports;
 });
 
-System.registerDynamic("src/map", ["@angular/core", "./layers/tile", "./view"], true, function($__require, exports, module) {
+System.registerDynamic("src/map", ["@angular/core", "./layers/tile", "./layers/vector", "./view"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -303,6 +449,7 @@ System.registerDynamic("src/map", ["@angular/core", "./layers/tile", "./view"], 
   };
   var core_1 = $__require('@angular/core');
   var tile_1 = $__require('./layers/tile');
+  var vector_1 = $__require('./layers/vector');
   var view_1 = $__require('./view');
   var Map = (function() {
     function Map(_el) {
@@ -318,9 +465,13 @@ System.registerDynamic("src/map", ["@angular/core", "./layers/tile", "./view"], 
       this._tileLayers.forEach(function(item) {
         _this.olInstance.addLayer(item.olInstance);
       });
+      this._vectorLayers.forEach(function(item) {
+        _this.olInstance.addLayer(item.olInstance);
+      });
     };
     Map.prototype.ngAfterContentInit = function() {};
     __decorate([core_1.ContentChildren(tile_1.Tile), __metadata('design:type', core_1.QueryList)], Map.prototype, "_tileLayers", void 0);
+    __decorate([core_1.ContentChildren(vector_1.Vector), __metadata('design:type', core_1.QueryList)], Map.prototype, "_vectorLayers", void 0);
     __decorate([core_1.ContentChild(view_1.View), __metadata('design:type', view_1.View)], Map.prototype, "_view", void 0);
     Map = __decorate([core_1.Component({
       selector: 'map',
