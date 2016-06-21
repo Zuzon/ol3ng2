@@ -10,7 +10,7 @@ import {
     Host,
     Inject,
     forwardRef,
-    Type
+    EventEmitter
 } from '@angular/core';
 import { Map } from '../map';
 import { Layer } from './layer';
@@ -27,7 +27,8 @@ import { Layer } from './layer';
         'zIndex',
         'minResolution',
         'maxResolution',
-        'source'
+        'source',
+        'useInterimTilesOnError'
     ],
     outputs: [
         'opacity',
@@ -36,10 +37,25 @@ import { Layer } from './layer';
         'zIndex',
         'minResolution',
         'maxResolution',
-        'source'
+        'source',
+        'useInterimTilesOnError'
     ]
 })
 export class Tile extends Layer implements AfterContentInit {
+    private _useInterimTilesOnError: boolean;
+
+    useInterimTilesOnErrorChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    public get useInterimTilesOnError(): boolean {
+        return this._useInterimTilesOnError;
+    }
+
+    public set useInterimTilesOnError(value: boolean) {
+        this._useInterimTilesOnError = value;
+        if(this.olInstance){
+            this.olInstance.setUseInterimTilesOnError(value);
+        }
+    }
     constructor(@Host() @Inject(forwardRef(() => Map)) map: Map) {
         super(map);
     }
@@ -55,6 +71,10 @@ export class Tile extends Layer implements AfterContentInit {
         });
         this.olInstance.on(['propertychange'], (event: any) => {
             this.onLayerPropertyChange(event);
+            if(event.key === 'useinterimtilesonerror'){
+                setTimeout(()=>{this.useInterimTilesOnErrorChange.emit(this.olInstance.getUseInterimTilesOnError());}, 10);
+                return;
+            }
         });
         if(this._map.olInstance){
             this._map.olInstance.addLayer(this.olInstance);

@@ -685,6 +685,8 @@ declare namespace olx {
              * Layer style. See ol.style for default style which will be used if this is not defined.
              */
             style?: ol.style.Style | Array<ol.style.Style> | any;
+
+            map?: ol.Map;
         }
     }
 

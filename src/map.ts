@@ -9,6 +9,7 @@ import {
     ElementRef
 } from '@angular/core';
 import { Tile } from './layers/tile';
+import { Vector } from './layers/vector';
 import { View } from './view';
 
 @Component({
@@ -20,6 +21,8 @@ import { View } from './view';
 export class Map implements AfterViewInit, AfterContentInit {
     @ContentChildren(Tile)
     private _tileLayers: QueryList<Tile>;
+    @ContentChildren(Vector)
+    private _vectorLayers: QueryList<Vector>;
     @ContentChild(View)
     private _view: View;
     public olInstance: ol.Map;
@@ -34,7 +37,9 @@ export class Map implements AfterViewInit, AfterContentInit {
         this._tileLayers.forEach(item => {
             this.olInstance.addLayer(item.olInstance);
         });
-        
+        this._vectorLayers.forEach(item => {
+            this.olInstance.addLayer(item.olInstance);
+        });
     }
     ngAfterContentInit(): void {
     }
