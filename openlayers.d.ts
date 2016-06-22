@@ -4177,6 +4177,12 @@ declare namespace ol {
             addFeature(feature: ol.Feature): void;
 
             /**
+             * Remove a single feature from the source. If you want to remove all features at once,
+             * use the source.clear() method instead.
+             */
+            removeFeature(feature: ol.Feature): void;
+
+            /**
              * Add a batch of features to the source.
              */
             addFeatures(features: ol.Feature[]): void;

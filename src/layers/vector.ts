@@ -16,7 +16,7 @@ import { Map } from '../map';
 import { Layer } from './layer';
 
 @Component({
-    selector: 'vector',
+    selector: 'ol-vector',
     template: ' ',
     styles: [],
     directives: [],

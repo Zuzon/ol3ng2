@@ -12,12 +12,12 @@ import {
     forwardRef,
     EventEmitter
 } from '@angular/core';
-
+import {Feature} from '../feature';
 @Component({
     selector: 'vector > vector-source',
     template: ' ',
     styles: [],
-    directives: [],
+    directives: [Feature],
     inputs: [
         'format',
         'loader',
@@ -29,23 +29,40 @@ import {
     outputs: [
     ]
 })
-export class VectorSource implements AfterContentInit {
+export class VectorSource implements AfterViewInit {
 
-    private _features: ol.Feature[];
+    @ContentChildren(Feature)
+    private _features: QueryList<Feature>;
     private _format: ol.format.Feature;
     private _loader: ol.FeatureLoader;
     private _logo: olx.LogoOptions;
     private _strategy: ol.LoadingStrategy;
     private _wrapX: boolean;
     private _useSpatialIndex: boolean;
-
+    private _url: string;
     public olInstance: ol.source.Vector;
     
     constructor(){
 
     }
 
-    ngAfterContentInit(): void {
+    ngAfterViewInit(): void {
+        this.olInstance = new ol.source.Vector({
+            features: [],
+            format: this._format,
+            loader: this._loader,
+            logo: this._logo,
+            strategy: this._strategy,
+            url: this._url,
+            useSpatialIndex: this._useSpatialIndex,
+            wrapX: this._wrapX
+        });
+        this._features.forEach(item => {
+            this.olInstance.addFeature(item.olInstance);
+        });
+    }
 
+    ngOnDestroy(): void {
+        this.olInstance.clear(true);
     }
 }
