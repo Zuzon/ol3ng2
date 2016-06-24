@@ -16,7 +16,7 @@ import { View } from './view';
     selector: 'map',
     template: ' ',
     styles: [':host{display:block;}'],
-    directives: [Tile, View]
+    directives: [Tile, View, Vector]
 })
 export class Map implements AfterViewInit, AfterContentInit {
     @ContentChildren(Tile)
@@ -38,6 +38,7 @@ export class Map implements AfterViewInit, AfterContentInit {
             this.olInstance.addLayer(item.olInstance);
         });
         this._vectorLayers.forEach(item => {
+            console.log('add vector layer');
             this.olInstance.addLayer(item.olInstance);
         });
     }

@@ -410,7 +410,7 @@ System.registerDynamic("src/layers/vector", ["@angular/core", "../map", "./layer
       this._map.olInstance.removeLayer(this.olInstance);
     };
     Vector = __decorate([core_1.Component({
-      selector: 'vector',
+      selector: 'ol-vector',
       template: ' ',
       styles: [],
       directives: [],
@@ -587,7 +587,156 @@ System.registerDynamic("src/view", ["@angular/core", "./map"], true, function($_
   return module.exports;
 });
 
-System.registerDynamic("ol3ng2", ["./src/map", "./src/layers/tile", "./src/view"], true, function($__require, exports, module) {
+System.registerDynamic("src/source/vector", ["@angular/core", "../feature"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var core_1 = $__require('@angular/core');
+  var feature_1 = $__require('../feature');
+  var VectorSource = (function() {
+    function VectorSource() {}
+    VectorSource.prototype.ngAfterViewInit = function() {
+      var _this = this;
+      this.olInstance = new ol.source.Vector({
+        features: [],
+        format: this._format,
+        loader: this._loader,
+        logo: this._logo,
+        strategy: this._strategy,
+        url: this._url,
+        useSpatialIndex: this._useSpatialIndex,
+        wrapX: this._wrapX
+      });
+      this._features.forEach(function(item) {
+        _this.olInstance.addFeature(item.olInstance);
+      });
+    };
+    VectorSource.prototype.ngOnDestroy = function() {
+      this.olInstance.clear(true);
+    };
+    __decorate([core_1.ContentChildren(feature_1.Feature), __metadata('design:type', core_1.QueryList)], VectorSource.prototype, "_features", void 0);
+    VectorSource = __decorate([core_1.Component({
+      selector: 'vector > vector-source',
+      template: ' ',
+      styles: [],
+      directives: [feature_1.Feature],
+      inputs: ['format', 'loader', 'logo', 'strategy', 'wrapX', 'useSpatialIndex'],
+      outputs: []
+    }), __metadata('design:paramtypes', [])], VectorSource);
+    return VectorSource;
+  }());
+  exports.VectorSource = VectorSource;
+  return module.exports;
+});
+
+System.registerDynamic("src/feature", ["@angular/core", "./source/vector"], true, function($__require, exports, module) {
+  "use strict";
+  ;
+  var define,
+      global = this,
+      GLOBAL = this;
+  var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+    var c = arguments.length,
+        r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+        d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+      r = Reflect.decorate(decorators, target, key, desc);
+    else
+      for (var i = decorators.length - 1; i >= 0; i--)
+        if (d = decorators[i])
+          r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+  };
+  var __metadata = (this && this.__metadata) || function(k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
+      return Reflect.metadata(k, v);
+  };
+  var __param = (this && this.__param) || function(paramIndex, decorator) {
+    return function(target, key) {
+      decorator(target, key, paramIndex);
+    };
+  };
+  var core_1 = $__require('@angular/core');
+  var vector_1 = $__require('./source/vector');
+  var Feature = (function() {
+    function Feature(source) {
+      this.source = source;
+      this.olInstance = new ol.Feature({
+        geometry: this._geometry,
+        style: this._style,
+        id: this._id
+      });
+      if (source.olInstance) {
+        source.olInstance.addFeature(this.olInstance);
+      }
+    }
+    Object.defineProperty(Feature.prototype, "geometry", {
+      set: function(value) {
+        this._geometry = value;
+        if (this.olInstance) {
+          this.olInstance.setGeometry(value);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(Feature.prototype, "style", {
+      set: function(value) {
+        this._style = value;
+        if (this.olInstance && typeof value !== 'function') {
+          this.olInstance.setStyle(value);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(Feature.prototype, "id", {
+      set: function(value) {
+        this._id = value;
+        if (this.olInstance) {
+          this.olInstance.setId(value);
+        }
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Feature.prototype.ngOnDestroy = function() {
+      this.source.olInstance.removeFeature(this.olInstance);
+    };
+    Feature = __decorate([core_1.Component({
+      selector: 'ol-feature',
+      template: ' ',
+      styles: [],
+      directives: [],
+      inputs: ['geometry', 'style', 'id']
+    }), __param(0, core_1.Host()), __param(0, core_1.Inject(core_1.forwardRef(function() {
+      return vector_1.VectorSource;
+    }))), __metadata('design:paramtypes', [vector_1.VectorSource])], Feature);
+    return Feature;
+  }());
+  exports.Feature = Feature;
+  return module.exports;
+});
+
+System.registerDynamic("ol3ng2", ["./src/map", "./src/layers/tile", "./src/view", "./src/source/vector", "./src/feature"], true, function($__require, exports, module) {
   "use strict";
   ;
   var define,
@@ -596,6 +745,8 @@ System.registerDynamic("ol3ng2", ["./src/map", "./src/layers/tile", "./src/view"
   var map_1 = $__require('./src/map');
   var tile_1 = $__require('./src/layers/tile');
   var view_1 = $__require('./src/view');
-  exports.Ol3Ng2 = [map_1.Map, tile_1.Tile, view_1.View];
+  var vector_1 = $__require('./src/source/vector');
+  var feature_1 = $__require('./src/feature');
+  exports.Ol3Ng2 = [map_1.Map, tile_1.Tile, view_1.View, vector_1.VectorSource, feature_1.Feature];
   return module.exports;
 });

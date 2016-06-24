@@ -4,6 +4,11 @@
 <input type="number" [value]="zoom" (input)="zoom = $event.target.value" />
 <map style="height: 600px">
     <tile [source]="source"></tile>
+    <ol-vector [style]="fStyle">
+        <vector-source>
+            <ol-feature [geometry]="geometry" [style]="fStyle" [id]="'test'"></ol-feature>
+        </vector-source>
+    </ol-vector>
     <view [(center)]="center" [(zoom)]="zoom"></view>
 </map>
 <div layout="column">

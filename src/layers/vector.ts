@@ -14,12 +14,13 @@ import {
 } from '@angular/core';
 import { Map } from '../map';
 import { Layer } from './layer';
+import { VectorSource } from '../source/vector';
 
 @Component({
     selector: 'ol-vector',
     template: ' ',
     styles: [],
-    directives: [],
+    directives: [VectorSource],
     inputs: [
         'opacity',
         'visible',
@@ -84,6 +85,7 @@ export class Vector extends Layer implements AfterContentInit {
         super(map);
     }
     ngAfterContentInit(): void {
+        console.log('init vector layer', this._style, this.source);
         this.olInstance = new ol.layer.Vector({
             opacity: this.opacity,
             source: <ol.source.Vector>(this.source),

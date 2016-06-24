@@ -13,8 +13,9 @@ import {
     EventEmitter
 } from '@angular/core';
 import {Feature} from '../feature';
+import {Vector} from '../layers/vector';
 @Component({
-    selector: 'vector > vector-source',
+    selector: 'ol-vector > vector-source',
     template: ' ',
     styles: [],
     directives: [Feature],
@@ -42,11 +43,12 @@ export class VectorSource implements AfterViewInit {
     private _url: string;
     public olInstance: ol.source.Vector;
     
-    constructor(){
+    constructor(@Host() @Inject(forwardRef(() => Vector)) private layer: Vector){
 
     }
 
     ngAfterViewInit(): void {
+        console.log('init vector source');
         this.olInstance = new ol.source.Vector({
             features: [],
             format: this._format,
@@ -58,8 +60,13 @@ export class VectorSource implements AfterViewInit {
             wrapX: this._wrapX
         });
         this._features.forEach(item => {
+            console.log('add feature to the source', item);
             this.olInstance.addFeature(item.olInstance);
         });
+        if(this.layer){
+            console.log('set source');
+            this.layer.olInstance.setSource(this.olInstance);
+        }
     }
 
     ngOnDestroy(): void {

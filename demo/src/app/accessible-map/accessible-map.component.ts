@@ -14,7 +14,27 @@ export class AccessibleMapComponent implements OnInit {
   public source: ol.source.Source = new ol.source.OSM();
   public center: ol.Coordinate = [0, 0];
   public zoom: number = 2;
+  public geometry: ol.geom.Geometry;
+  public fStyle: ol.style.Style;
   constructor() {
+    
+    //this.geometry = new ol.geom.Polygon([[[-5e6, -1e6], [-4e6, 1e6], [-3e6, -1e6]]]);
+    this.geometry = new ol.geom.Point([0, 0]);
+    this.fStyle = new ol.style.Style({
+      fill: new ol.style.Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#ffcc33',
+        width: 2
+      }),
+      image: new ol.style.Circle({
+        radius: 7,
+        fill: new ol.style.Fill({
+          color: '#ffcc33'
+        })
+      })
+    });
     this.template = `
     <p>Center {{center | json}}</p>
     <input type="number" [value]="center[0]" (input)="center = [$event.target.value, center[1]]" />
