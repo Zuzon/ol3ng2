@@ -49,14 +49,12 @@ export class Feature {
     }
 
     constructor(@Host() @Inject(forwardRef(() => VectorSource)) private source: VectorSource){
-        console.log('init feature');
         this.olInstance = new ol.Feature({
             geometry: this._geometry,
             style: this._style,
             id: this._id
         });
         if(source.olInstance){
-            console.log('add feature from constructor');
             source.olInstance.addFeature(this.olInstance);
         }
     }
