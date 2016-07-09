@@ -2882,7 +2882,7 @@ declare namespace ol {
          * in apps, as cannot be rendered.
          */
         class Circle extends ol.geom.SimpleGeometry {
-
+	    constructor(center: ol.Coordinate, radius: number, layout?: ol.geom.GeometryLayout);
             /**
             * Test if the geometry and the passed extent intersect.
             * @param extent Extent
