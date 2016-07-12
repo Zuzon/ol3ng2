@@ -4223,6 +4223,7 @@ declare namespace ol {
         }
 
         class XYZ {
+            constructor(options: any);
         }
 
         class Zoomify {
