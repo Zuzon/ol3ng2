@@ -39,7 +39,7 @@ export class VectorSource implements AfterViewInit {
     private _logo: olx.LogoOptions;
     private _strategy: ol.LoadingStrategy;
     private _wrapX: boolean;
-    private _useSpatialIndex: boolean;
+    private useSpatialIndex: boolean;
     private _url: string;
     public olInstance: ol.source.Vector;
     
@@ -56,7 +56,7 @@ export class VectorSource implements AfterViewInit {
             logo: this._logo,
             strategy: this._strategy,
             url: this._url,
-            useSpatialIndex: this._useSpatialIndex,
+            useSpatialIndex: this.useSpatialIndex,
             wrapX: this._wrapX
         });
         this._features.forEach(item => {
