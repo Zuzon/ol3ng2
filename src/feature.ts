@@ -55,7 +55,11 @@ export class Feature {
             id: this._id
         });
         if(source.olInstance){
-            source.olInstance.addFeature(this.olInstance);
+            if(source.olInstance.getFeaturesCollection() === null){
+                source.olInstance.addFeature(this.olInstance);
+            }else{
+                source.olInstance.getFeaturesCollection().push(this.olInstance);
+            }
         }
     }
     ngOnDestroy(): void {
