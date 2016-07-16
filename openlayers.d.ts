@@ -4208,6 +4208,7 @@ declare namespace ol {
              * Get all features on the source
              */
             getFeatures(): ol.Feature[];
+            getFeaturesCollection(): ol.Collection<ol.Feature>;
 
             /**
              * Get all features whose geometry intersects the provided coordinate.
