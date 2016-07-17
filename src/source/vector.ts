@@ -42,15 +42,15 @@ export class VectorSource implements AfterViewInit {
     private useSpatialIndex: boolean;
     private _url: string;
     public olInstance: ol.source.Vector;
-    
+    public features: ol.Collection<ol.Feature>;
     constructor(@Host() @Inject(forwardRef(() => Vector)) private layer: Vector){
 
     }
 
     ngAfterViewInit(): void {
-        console.log('init vector source');
+        this.features = new ol.Collection([]);
         this.olInstance = new ol.source.Vector({
-            features: [],
+            features: this.features,
             format: this._format,
             loader: this._loader,
             logo: this._logo,
@@ -60,11 +60,9 @@ export class VectorSource implements AfterViewInit {
             wrapX: this._wrapX
         });
         this._features.forEach(item => {
-            console.log('add feature to the source', item);
             this.olInstance.addFeature(item.olInstance);
         });
         if(this.layer){
-            console.log('set source');
             this.layer.olInstance.setSource(this.olInstance);
         }
     }
