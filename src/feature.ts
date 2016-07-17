@@ -27,18 +27,21 @@ export class Feature {
     private _geometry: ol.geom.Geometry;
     private _style: ol.style.Style | ol.style.Style[] | ol.FeatureStyleFunction;
     private _id: number | string;
+    private _featureAdded: boolean;
     public olInstance: ol.Feature;
 
     public set geometry(value: ol.geom.Geometry){
         this._geometry = value;
         if(this.olInstance){
             this.olInstance.setGeometry(value);
+            this.addFeature();
         }
     }
     public set style(value: ol.style.Style | ol.style.Style[] | ol.FeatureStyleFunction) {
         this._style = value;
         if(this.olInstance && typeof value !== 'function'){
             this.olInstance.setStyle(<any>value);
+            this.addFeature();
         }
     }
     public set id(value: number | string){
@@ -49,20 +52,21 @@ export class Feature {
     }
 
     constructor(@Host() @Inject(forwardRef(() => VectorSource)) private source: VectorSource){
+        this._featureAdded = false;
         this.olInstance = new ol.Feature({
-            geometry: this._geometry,
-            style: this._style,
+            geometry: this.geometry,
+            style: this.style,
             id: this._id
         });
-        if(source.olInstance){
-            if(source.olInstance.getFeaturesCollection() === null){
-                source.olInstance.addFeature(this.olInstance);
-            }else{
-                source.olInstance.getFeaturesCollection().push(this.olInstance);
-            }
-        }
+        this.addFeature();
     }
     ngOnDestroy(): void {
         this.source.olInstance.removeFeature(this.olInstance);
+    }
+    private addFeature(){
+        if(this.source.olInstance && this._geometry && this._style && !this._featureAdded){
+            this.source.olInstance.addFeature(this.olInstance);
+            this._featureAdded = true;
+        }
     }
 }
