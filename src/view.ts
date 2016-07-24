@@ -25,12 +25,14 @@ import { Map } from './map';
     directives: [],
     inputs: [
         'center', 
-        'zoom'
+        'zoom',
+		'rotation'
     ]
 })
 export class View implements AfterContentInit {
     private _center: ol.Coordinate;
     private _zoom: number;
+	private _rotation: number;
     private _map: Map;
     public olInstance: ol.View;
     @Output()
@@ -44,7 +46,8 @@ export class View implements AfterContentInit {
     ngAfterContentInit(): void {
         this.olInstance = new ol.View({
             center: this.center,
-            zoom: this._zoom
+            zoom: this._zoom,
+			rotation: this._rotation
         });
         this.olInstance.on(['propertychange'], (event: any) => {
             if(event.key === 'resolution'){
@@ -79,6 +82,17 @@ export class View implements AfterContentInit {
         this._zoom = value;
         if(this.olInstance){
             this.olInstance.setZoom(value);
+        }
+    } 
+	
+	public get rotation(): number {
+        return this._rotation;
+    }
+    @Input()
+    public set rotation(value: number) {
+        this._rotation = value;
+        if(this.olInstance){
+            this.olInstance.setRotation(value);
         }
     } 
 }
